@@ -4,7 +4,7 @@ A mobile app UI design for crochet lovers, built as a single-file interactive HT
 
 ## Live Demo
 
-https://tashu-26.github.io/TasHu-S-Maditation-Mobile-app-ui/
+https://tashu-26.github.io/TasHu-S-Maditation-Mobile-app/
 
 ## Features
 
