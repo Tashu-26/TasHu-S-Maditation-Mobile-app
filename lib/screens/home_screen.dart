@@ -10,7 +10,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: ClampingScrollPhysics(),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,7 +53,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 25),
 
-              // Welcome Banner
+              
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(22),
@@ -90,7 +92,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              // Continue Creating
+              
               _sectionTitle("Continue Creating"),
               const SizedBox(height: 14),
 
@@ -110,7 +112,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              // Crochet Tools
+            
               _sectionTitle("Your Crochet Tools"),
               const SizedBox(height: 14),
 
@@ -131,7 +133,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              // Beginner Patterns
+              
               _sectionTitle("Beginner-Friendly Patterns"),
               const SizedBox(height: 14),
 
@@ -225,7 +227,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Section heading
+  
   Widget _sectionTitle(String title) {
     return Text(
       title,
@@ -237,7 +239,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Project progress card
   Widget _projectCard(
       String name,
       String percentage,
@@ -299,7 +300,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Tool card
   Widget _toolCard(IconData icon, String title) {
     return Container(
       padding: const EdgeInsets.all(14),
@@ -327,7 +327,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Learning card
+  
   Widget _learningCard(IconData icon, String title, String subtitle) {
     return Container(
       padding: const EdgeInsets.all(15),
