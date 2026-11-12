@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import 'pattern_details_screen.dart';
 
 class PatternFinderScreen extends StatefulWidget {
   const PatternFinderScreen({super.key});
@@ -408,10 +409,16 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${pattern.name} details will be added next.'),
-            duration: const Duration(seconds: 2),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PatternDetailsScreen(
+              patternName: pattern.name,
+              difficulty: pattern.difficulty,
+              duration: pattern.duration,
+              icon: pattern.icon,
+              color: pattern.color,
+            ),
           ),
         );
       },
