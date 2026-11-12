@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 import 'project_details_screen.dart';
+import 'new_project_screen.dart';
 
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key});
@@ -22,6 +24,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       deadline: 'Nov 12',
       color: const Color(0xFFE9B3C0),
       icon: Icons.shopping_bag_outlined,
+      category: 'Bags',
+      difficulty: 'Intermediate',
+      description: 'A beautiful handmade crochet tote bag.',
     ),
     ProjectItem(
       name: 'Baby Blanket',
@@ -30,6 +35,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       deadline: 'Dec 1',
       color: const Color(0xFFFFF0E8),
       icon: Icons.grid_view_rounded,
+      category: 'Home Decor',
+      difficulty: 'Beginner',
+      description: 'A soft and cozy handmade baby blanket.',
     ),
     ProjectItem(
       name: 'Bunny Amigurumi',
@@ -38,6 +46,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       deadline: 'Dec 20',
       color: const Color(0xFFB9CBB5),
       icon: Icons.cruelty_free_outlined,
+      category: 'Toys',
+      difficulty: 'Intermediate',
+      description: 'A cute handmade crochet bunny.',
     ),
     ProjectItem(
       name: 'Flower Bouquet',
@@ -46,6 +57,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       deadline: 'Oct 10',
       color: const Color(0xFFE3C9A8),
       icon: Icons.local_florist,
+      category: 'Flowers',
+      difficulty: 'Beginner',
+      description: 'A lovely handmade crochet flower bouquet.',
     ),
     ProjectItem(
       name: 'Crochet Scarf',
@@ -54,6 +68,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       deadline: 'Sep 15',
       color: const Color(0xFFE9B3C0),
       icon: Icons.checkroom_outlined,
+      category: 'Accessories',
+      difficulty: 'Beginner',
+      description: 'A warm and comfortable crochet scarf.',
     ),
   ];
 
@@ -84,6 +101,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Screen heading
               const Text(
                 'My Projects',
                 style: TextStyle(
@@ -105,7 +123,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
               const SizedBox(height: 22),
 
-              // Current and Completed tabs
+              // Current and completed tabs
               Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
@@ -122,7 +140,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
               const SizedBox(height: 20),
 
-              // Project filters
+              // Filter heading
               const Text(
                 'Filter Projects',
                 style: TextStyle(
@@ -134,6 +152,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
               const SizedBox(height: 12),
 
+              // Filter chips
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
@@ -168,6 +187,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
               const SizedBox(height: 24),
 
+              // Project list heading
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -191,6 +211,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
               const SizedBox(height: 14),
 
+              // Project cards
               if (projects.isEmpty)
                 _emptyState()
               else
@@ -202,7 +223,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: _showNewProjectDialog,
+                  onPressed: _showNewProjectScreen,
                   icon: const Icon(Icons.add),
                   label: const Text('New Project'),
                 ),
@@ -214,6 +235,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     );
   }
 
+  // Current / Completed button
   Widget _statusButton(String status) {
     final selected = _selectedStatus == status;
 
@@ -228,14 +250,18 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
-            color: selected ? AppColors.primary : Colors.transparent,
+            color: selected
+                ? AppColors.primary
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(11),
           ),
           child: Text(
             status,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: selected ? AppColors.white : AppColors.secondaryText,
+              color: selected
+                  ? AppColors.white
+                  : AppColors.secondaryText,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -244,6 +270,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     );
   }
 
+  // Individual project card
   Widget _projectCard(ProjectItem project) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -285,7 +312,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         color: AppColors.darkBrown,
                       ),
                     ),
+
                     const SizedBox(height: 6),
+
                     Text(
                       project.status,
                       style: const TextStyle(
@@ -293,12 +322,24 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         color: AppColors.secondaryText,
                       ),
                     ),
+
                     const SizedBox(height: 5),
+
                     Text(
                       'Target: ${project.deadline}',
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.secondaryText,
+                      ),
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    Text(
+                      '${project.category} • ${project.difficulty}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: AppColors.primary,
                       ),
                     ),
                   ],
@@ -309,6 +350,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
           const SizedBox(height: 17),
 
+          // Progress information
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -319,6 +361,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   color: AppColors.darkBrown,
                 ),
               ),
+
               Text(
                 '${project.progress}%',
                 style: const TextStyle(
@@ -331,6 +374,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
           const SizedBox(height: 9),
 
+          // Progress bar
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
@@ -343,6 +387,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
           const SizedBox(height: 12),
 
+          // View details button
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
@@ -363,6 +408,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     );
   }
 
+  // Empty project message
   Widget _emptyState() {
     return Container(
       width: double.infinity,
@@ -378,7 +424,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             size: 50,
             color: AppColors.primary,
           ),
+
           SizedBox(height: 12),
+
           Text(
             'No projects found',
             style: TextStyle(
@@ -387,73 +435,42 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               color: AppColors.darkBrown,
             ),
           ),
+
           SizedBox(height: 6),
+
           Text(
             'Try another filter or create a new project.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.secondaryText),
+            style: TextStyle(
+              color: AppColors.secondaryText,
+            ),
           ),
         ],
       ),
     );
   }
 
-  void _showNewProjectDialog() {
-    final controller = TextEditingController();
+  // Open New Project screen and receive the new project
+  Future<void> _showNewProjectScreen() async {
+    final newProject = await Navigator.push<ProjectItem>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NewProjectScreen(),
+      ),
+    );
 
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppColors.white,
-          title: const Text('Create New Project'),
-          content: TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-              hintText: 'Enter project name',
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final name = controller.text.trim();
+    if (!mounted) return;
 
-                if (name.isEmpty) return;
-
-                setState(() {
-                  _projects.insert(
-                    0,
-                    ProjectItem(
-                      name: name,
-                      progress: 0,
-                      status: 'Planned',
-                      deadline: 'Not set',
-                      color: AppColors.softPink,
-                      icon: Icons.favorite_border,
-                    ),
-                  );
-
-                  _selectedStatus = 'Current';
-                  _selectedFilter = 'All';
-                });
-
-                controller.dispose();
-                Navigator.pop(dialogContext);
-              },
-              child: const Text('Create'),
-            ),
-          ],
-        );
-      },
-    ).then((_) {
-      controller.dispose();
-    });
+    if (newProject != null) {
+      setState(() {
+        _projects.insert(0, newProject);
+        _selectedStatus = 'Current';
+        _selectedFilter = 'All';
+      });
+    }
   }
 
+  // Open Project Details screen
   void _showProjectDetails(ProjectItem project) {
     Navigator.push(
       context,
@@ -468,6 +485,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 }
 
+// Project data model
 class ProjectItem {
   final String name;
   final int progress;
@@ -475,6 +493,9 @@ class ProjectItem {
   final String deadline;
   final Color color;
   final IconData icon;
+  final String category;
+  final String difficulty;
+  final String description;
 
   ProjectItem({
     required this.name,
@@ -483,5 +504,8 @@ class ProjectItem {
     required this.deadline,
     required this.color,
     required this.icon,
+    this.category = 'Other',
+    this.difficulty = 'Beginner',
+    this.description = '',
   });
 }
