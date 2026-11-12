@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import 'project_details_screen.dart';
 
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key});
@@ -454,31 +455,15 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 
   void _showProjectDetails(ProjectItem project) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: AppColors.white,
-          title: Text(project.name),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Status: ${project.status}'),
-              const SizedBox(height: 8),
-              Text('Progress: ${project.progress}%'),
-              const SizedBox(height: 8),
-              Text('Target: ${project.deadline}'),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return ProjectDetailsScreen(
+            project: project,
+          );
+        },
+      ),
     );
   }
 }
