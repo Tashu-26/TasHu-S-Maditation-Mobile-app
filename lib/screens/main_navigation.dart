@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import 'home_screen.dart';
+import 'pattern_finder_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -16,16 +17,15 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const PlaceholderScreen(
-      title: 'Pattern Finder',
-      icon: Icons.search,
-      description: 'Discover beautiful crochet patterns.',
-    ),
+
+    const PatternFinderScreen(),
+
     const PlaceholderScreen(
       title: 'My Projects',
       icon: Icons.folder_outlined,
       description: 'Organize your crochet projects.',
     ),
+
     const PlaceholderScreen(
       title: 'My Studio',
       icon: Icons.person_outline,
@@ -43,7 +43,6 @@ class _MainNavigationState extends State<MainNavigation> {
 
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
-
         backgroundColor: AppColors.white,
         indicatorColor: AppColors.cream,
 
@@ -59,15 +58,19 @@ class _MainNavigationState extends State<MainNavigation> {
             selectedIcon: Icon(Icons.home),
             label: 'Home',
           ),
+
           NavigationDestination(
             icon: Icon(Icons.search),
+            selectedIcon: Icon(Icons.search),
             label: 'Patterns',
           ),
+
           NavigationDestination(
             icon: Icon(Icons.folder_outlined),
             selectedIcon: Icon(Icons.folder),
             label: 'Projects',
           ),
+
           NavigationDestination(
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
@@ -78,6 +81,8 @@ class _MainNavigationState extends State<MainNavigation> {
     );
   }
 }
+
+// Temporary screen for features we haven't developed yet.
 
 class PlaceholderScreen extends StatelessWidget {
   final String title;
@@ -95,9 +100,11 @@ class PlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -106,7 +113,9 @@ class PlaceholderScreen extends StatelessWidget {
                 size: 65,
                 color: AppColors.primary,
               ),
+
               const SizedBox(height: 20),
+
               Text(
                 title,
                 style: const TextStyle(
@@ -115,7 +124,9 @@ class PlaceholderScreen extends StatelessWidget {
                   color: AppColors.darkBrown,
                 ),
               ),
+
               const SizedBox(height: 10),
+
               Text(
                 description,
                 textAlign: TextAlign.center,
@@ -124,7 +135,9 @@ class PlaceholderScreen extends StatelessWidget {
                   color: AppColors.secondaryText,
                 ),
               ),
+
               const SizedBox(height: 20),
+
               const Text(
                 'Coming Soon 🌷',
                 style: TextStyle(
