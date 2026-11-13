@@ -6,6 +6,7 @@ import 'yarn_stash_screen.dart';
 import 'pattern_finder_screen.dart';
 import 'projects_screen.dart';
 import 'color_helper_screen.dart';
+import 'cost_calculator_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,7 +38,6 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // HEADER
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,6 +207,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
+
                   _toolCard(
                     context,
                     title: 'Row Counter',
@@ -217,6 +218,8 @@ class HomeScreen extends StatelessWidget {
                       _showComingSoon(context, 'Row Counter');
                     },
                   ),
+
+                  // COLOR STUDIO
                   _toolCard(
                     context,
                     title: 'Color Studio',
@@ -230,6 +233,8 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
+
+                  // COST CALCULATOR
                   _toolCard(
                     context,
                     title: 'Cost Calculator',
@@ -237,7 +242,10 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.calculate,
                     color: const Color(0xFFE3C9A8),
                     onTap: () {
-                      _showComingSoon(context, 'Cost Calculator');
+                      _openScreen(
+                        context,
+                        const CostCalculatorScreen(),
+                      );
                     },
                   ),
                 ],
