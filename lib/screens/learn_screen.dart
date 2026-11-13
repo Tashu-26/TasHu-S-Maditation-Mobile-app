@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
+import 'lesson_screen.dart';
 
 class LearnScreen extends StatefulWidget {
   const LearnScreen({super.key});
@@ -19,7 +21,11 @@ class _LearnScreenState extends State<LearnScreen> {
       'description': 'Learn the basics of crochet.',
       'icon': Icons.waving_hand_outlined,
       'color': AppColors.cream,
-      'lessons': ['Introduction to Crochet', 'Choosing Your Hook', 'Holding Yarn and Hook'],
+      'lessons': [
+        'Introduction to Crochet',
+        'Choosing Your Hook',
+        'Holding Yarn and Hook',
+      ],
     },
     {
       'name': 'Basic Stitches',
@@ -27,7 +33,13 @@ class _LearnScreenState extends State<LearnScreen> {
       'description': 'Practice essential crochet stitches.',
       'icon': Icons.grid_view_rounded,
       'color': AppColors.softPink,
-      'lessons': ['Chain Stitch', 'Single Crochet', 'Half Double Crochet', 'Double Crochet', 'Slip Stitch'],
+      'lessons': [
+        'Chain Stitch',
+        'Single Crochet',
+        'Half Double Crochet',
+        'Double Crochet',
+        'Slip Stitch',
+      ],
     },
     {
       'name': 'Techniques',
@@ -35,7 +47,12 @@ class _LearnScreenState extends State<LearnScreen> {
       'description': 'Improve your crochet skills.',
       'icon': Icons.auto_awesome_outlined,
       'color': AppColors.sageGreen,
-      'lessons': ['Making a Magic Ring', 'Working in Rounds', 'Joining Techniques', 'Finishing Your Project'],
+      'lessons': [
+        'Making a Magic Ring',
+        'Working in Rounds',
+        'Joining Techniques',
+        'Finishing Your Project',
+      ],
     },
     {
       'name': 'Terminology',
@@ -43,76 +60,31 @@ class _LearnScreenState extends State<LearnScreen> {
       'description': 'Understand common crochet words.',
       'icon': Icons.menu_book_outlined,
       'color': AppColors.beige,
-      'lessons': ['CH — Chain', 'SC — Single Crochet', 'DC — Double Crochet', 'HDC — Half Double Crochet', 'SL ST — Slip Stitch', 'YO — Yarn Over'],
+      'lessons': [
+        'CH — Chain',
+        'SC — Single Crochet',
+        'DC — Double Crochet',
+        'HDC — Half Double Crochet',
+        'SL ST — Slip Stitch',
+        'YO — Yarn Over',
+      ],
     },
   ];
 
-  void _showLesson(String lesson) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppColors.background,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25),
+  void _openLesson(String lesson) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LessonScreen(
+          lessonTitle: lesson,
+          level: _selectedCategory == 0
+              ? 'Beginner'
+              : _selectedCategory == 1
+              ? 'Beginner'
+              : 'Intermediate',
+          duration: '10 minutes',
         ),
       ),
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 42,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: AppColors.border,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                'Your Next Lesson',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                lesson,
-                style: const TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.darkBrown,
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'This lesson will guide you through the topic step by step. '
-                    'The detailed lesson page is coming in our next development step.',
-                style: TextStyle(
-                  color: AppColors.secondaryText,
-                  height: 1.5,
-                ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Got it'),
-                ),
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
-        );
-      },
     );
   }
 
@@ -208,7 +180,8 @@ class _LearnScreenState extends State<LearnScreen> {
                               value: 0.60,
                               minHeight: 7,
                               backgroundColor: Color(0x55FFFFFF),
-                              valueColor: AlwaysStoppedAnimation<Color>(
+                              valueColor:
+                              AlwaysStoppedAnimation<Color>(
                                 Colors.white,
                               ),
                             ),
@@ -228,16 +201,20 @@ class _LearnScreenState extends State<LearnScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
-                        onPressed: () => _showLesson('Single Crochet'),
+                        onPressed: () => _openLesson('Single Crochet'),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppColors.primary,
                           backgroundColor: Colors.white,
                           side: BorderSide.none,
-                          padding: const EdgeInsets.symmetric(vertical: 13),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 13,
+                          ),
                         ),
                         child: const Text(
                           'Continue Lesson',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -398,6 +375,7 @@ class _LearnScreenState extends State<LearnScreen> {
 
               const SizedBox(height: 27),
 
+              // Lesson list heading
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -421,6 +399,7 @@ class _LearnScreenState extends State<LearnScreen> {
               ),
               const SizedBox(height: 12),
 
+              // Lesson list
               ...lessons.asMap().entries.map((entry) {
                 final index = entry.key;
                 final lesson = entry.value;
@@ -460,7 +439,7 @@ class _LearnScreenState extends State<LearnScreen> {
                       size: 16,
                       color: AppColors.primary,
                     ),
-                    onTap: () => _showLesson(lesson),
+                    onTap: () => _openLesson(lesson),
                   ),
                 );
               }),
