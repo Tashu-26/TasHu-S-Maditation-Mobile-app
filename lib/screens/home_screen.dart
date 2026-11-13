@@ -7,6 +7,7 @@ import 'pattern_finder_screen.dart';
 import 'projects_screen.dart';
 import 'color_helper_screen.dart';
 import 'cost_calculator_screen.dart';
+import 'learn_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -344,6 +345,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 15),
 
+              // LEARN CROCHET - CONNECTED
               _learningCard(
                 context,
                 title: 'Learn Crochet',
@@ -351,12 +353,16 @@ class HomeScreen extends StatelessWidget {
                 icon: Icons.school_outlined,
                 color: AppColors.sageGreen,
                 onTap: () {
-                  _showComingSoon(context, 'Learn Crochet');
+                  _openScreen(
+                    context,
+                    const LearnScreen(),
+                  );
                 },
               ),
 
               const SizedBox(height: 12),
 
+              // TUTORIAL SIMPLIFIER
               _learningCard(
                 context,
                 title: 'Tutorial Simplifier',
