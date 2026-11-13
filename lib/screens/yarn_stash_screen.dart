@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 
+import '../models/yarn_item.dart';
 import '../theme/app_colors.dart';
+import 'add_yarn_screen.dart';
 
 class YarnStashScreen extends StatefulWidget {
   const YarnStashScreen({super.key});
@@ -61,6 +63,7 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
     'Other',
   ];
 
+  // Filter yarns based on selected category.
   List<YarnItem> get _filteredYarns {
     if (_selectedCategory == 'All') {
       return _yarns;
@@ -71,6 +74,7 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
         .toList();
   }
 
+  // Calculate total quantity of all yarns.
   int get _totalQuantity {
     return _yarns.fold(
       0,
@@ -111,7 +115,7 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
 
               const SizedBox(height: 22),
 
-              // Inventory summary
+              // Inventory summary.
               Row(
                 children: [
                   Expanded(
@@ -134,7 +138,7 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
 
               const SizedBox(height: 25),
 
-              // Filter heading
+              // Category heading.
               const Text(
                 'Yarn Categories',
                 style: TextStyle(
@@ -146,13 +150,12 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
 
               const SizedBox(height: 12),
 
-              // Category filters
+              // Category filters.
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: _categories.map((category) {
-                    final selected =
-                        _selectedCategory == category;
+                    final selected = _selectedCategory == category;
 
                     return Padding(
                       padding: const EdgeInsets.only(right: 8),
@@ -180,10 +183,9 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
 
               const SizedBox(height: 25),
 
-              // Yarn list heading
+              // Collection heading.
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'Your Collection',
@@ -205,6 +207,7 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
 
               const SizedBox(height: 15),
 
+              // Yarn collection.
               if (yarns.isEmpty)
                 _emptyState()
               else
@@ -212,11 +215,11 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
 
               const SizedBox(height: 20),
 
-              // Add yarn button
+              // Add new yarn button.
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: _showAddYarnDialog,
+                  onPressed: _openAddYarnScreen,
                   icon: const Icon(Icons.add),
                   label: const Text('Add New Yarn'),
                 ),
@@ -228,6 +231,32 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
     );
   }
 
+  // Open Add Yarn screen and receive the new yarn.
+  Future<void> _openAddYarnScreen() async {
+    final YarnItem? newYarn = await Navigator.push<YarnItem>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddYarnScreen(),
+      ),
+    );
+
+    if (!mounted || newYarn == null) {
+      return;
+    }
+
+    setState(() {
+      _yarns.insert(0, newYarn);
+      _selectedCategory = 'All';
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('New yarn added successfully!'),
+      ),
+    );
+  }
+
+  // Summary cards.
   Widget _summaryCard(
       String title,
       String value,
@@ -270,6 +299,7 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
     );
   }
 
+  // Individual yarn card.
   Widget _yarnCard(YarnItem yarn) {
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -387,6 +417,7 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
     );
   }
 
+  // Empty category state.
   Widget _emptyState() {
     return Container(
       width: double.infinity,
@@ -423,175 +454,4 @@ class _YarnStashScreenState extends State<YarnStashScreen> {
       ),
     );
   }
-
-  void _showAddYarnDialog() {
-    final nameController = TextEditingController();
-    final brandController = TextEditingController();
-    final colorController = TextEditingController();
-    final quantityController = TextEditingController();
-
-    String category = 'Cotton';
-
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (context, updateDialog) {
-            return AlertDialog(
-              backgroundColor: AppColors.white,
-              title: const Text('Add New Yarn'),
-              content: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _dialogField(
-                      nameController,
-                      'Yarn name',
-                    ),
-                    const SizedBox(height: 12),
-                    _dialogField(
-                      brandController,
-                      'Brand',
-                    ),
-                    const SizedBox(height: 12),
-                    _dialogField(
-                      colorController,
-                      'Color name',
-                    ),
-                    const SizedBox(height: 12),
-                    _dialogField(
-                      quantityController,
-                      'Quantity',
-                      isNumber: true,
-                    ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<String>(
-                      value: category,
-                      decoration: const InputDecoration(
-                        labelText: 'Category',
-                        border: OutlineInputBorder(),
-                      ),
-                      items: _categories
-                          .where((item) => item != 'All')
-                          .map((item) {
-                        return DropdownMenuItem(
-                          value: item,
-                          child: Text(item),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        if (value != null) {
-                          updateDialog(() {
-                            category = value;
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(dialogContext);
-                    nameController.dispose();
-                    brandController.dispose();
-                    colorController.dispose();
-                    quantityController.dispose();
-                  },
-                  child: const Text('Cancel'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    final name = nameController.text.trim();
-                    final quantity =
-                    int.tryParse(quantityController.text.trim());
-
-                    if (name.isEmpty ||
-                        quantity == null ||
-                        quantity < 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Enter a yarn name and valid quantity.',
-                          ),
-                        ),
-                      );
-                      return;
-                    }
-
-                    setState(() {
-                      _yarns.insert(
-                        0,
-                        YarnItem(
-                          name: name,
-                          brand: brandController.text.trim().isEmpty
-                              ? 'Unknown brand'
-                              : brandController.text.trim(),
-                          colorName:
-                          colorController.text.trim().isEmpty
-                              ? 'Not specified'
-                              : colorController.text.trim(),
-                          quantity: quantity,
-                          unit: 'balls',
-                          category: category,
-                          color: AppColors.softPink,
-                        ),
-                      );
-
-                      _selectedCategory = 'All';
-                    });
-
-                    Navigator.pop(dialogContext);
-                    nameController.dispose();
-                    brandController.dispose();
-                    colorController.dispose();
-                    quantityController.dispose();
-                  },
-                  child: const Text('Add Yarn'),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
-
-  Widget _dialogField(
-      TextEditingController controller,
-      String label, {
-        bool isNumber = false,
-      }) {
-    return TextField(
-      controller: controller,
-      keyboardType: isNumber
-          ? TextInputType.number
-          : TextInputType.text,
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-      ),
-    );
-  }
-}
-
-class YarnItem {
-  final String name;
-  final String brand;
-  final String colorName;
-  int quantity;
-  final String unit;
-  final String category;
-  final Color color;
-
-  YarnItem({
-    required this.name,
-    required this.brand,
-    required this.colorName,
-    required this.quantity,
-    required this.unit,
-    required this.category,
-    required this.color,
-  });
 }
