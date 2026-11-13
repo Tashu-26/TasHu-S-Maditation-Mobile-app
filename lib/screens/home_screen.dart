@@ -1,51 +1,83 @@
 
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
+import 'yarn_stash_screen.dart';
+import 'pattern_finder_screen.dart';
+import 'projects_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  void _openScreen(BuildContext context, Widget screen) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => screen,
+      ),
+    );
+  }
+
+  void _showComingSoon(BuildContext context, String feature) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('$feature is coming soon! 🌷'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: ClampingScrollPhysics(),
-          ),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
+
+              // HEADER
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Good morning, Tashu 🌷",
+                      Text(
+                        'Good morning, Tashu 🌷',
                         style: TextStyle(
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
                           color: AppColors.darkBrown,
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        "Ready to create something lovely?",
+                      SizedBox(height: 6),
+                      Text(
+                        'Ready to create something lovely?',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           color: AppColors.secondaryText,
                         ),
                       ),
                     ],
                   ),
-                  CircleAvatar(
-                    backgroundColor: AppColors.cream,
-                    child: Icon(
-                      Icons.notifications_none,
-                      color: AppColors.primary,
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: const BoxDecoration(
+                      color: AppColors.cream,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        _showComingSoon(context, 'Notifications');
+                      },
+                      icon: const Icon(
+                        Icons.notifications_none,
+                        color: AppColors.primary,
+                        size: 25,
+                      ),
                     ),
                   ),
                 ],
@@ -53,38 +85,57 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 25),
 
-              
+              // WELCOME BANNER
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(22),
+                padding: const EdgeInsets.all(23),
                 decoration: BoxDecoration(
-                  color: AppColors.cream,
+                  color: AppColors.softPink,
                   borderRadius: BorderRadius.circular(22),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Your cozy corner",
+                      'Your cozy corner',
                       style: TextStyle(
-                        fontSize: 15,
-                        color: AppColors.secondaryText,
+                        color: AppColors.darkBrown,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 9),
                     const Text(
-                      "Make Something\nLovely ✨",
+                      'Make Something\nLovely',
                       style: TextStyle(
-                        fontSize: 27,
-                        height: 1.3,
-                        fontWeight: FontWeight.bold,
                         color: AppColors.darkBrown,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'A little yarn, a little patience,\nand a lot of creativity.',
+                      style: TextStyle(
+                        color: AppColors.darkBrown,
+                        fontSize: 13,
+                        height: 1.5,
                       ),
                     ),
                     const SizedBox(height: 18),
                     ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("Explore Patterns"),
+                      onPressed: () {
+                        _openScreen(
+                          context,
+                          const PatternFinderScreen(),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.darkBrown,
+                        foregroundColor: AppColors.white,
+                      ),
+                      child: const Text('Explore Patterns'),
                     ),
                   ],
                 ),
@@ -92,29 +143,47 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              
-              _sectionTitle("Continue Creating"),
-              const SizedBox(height: 14),
-
-              _projectCard(
-                "Rose Bloom Tote",
-                "68%",
-                0.68,
-                "Continue your lovely project",
+              // CONTINUE CREATING
+              _sectionTitle(
+                'Continue Creating',
+                'Pick up where you left off',
               ),
-              const SizedBox(height: 12),
-              _projectCard(
-                "Baby Blanket",
-                "35%",
-                0.35,
-                "Keep going, you're doing great!",
+
+              const SizedBox(height: 15),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: _projectCard(
+                      context,
+                      name: 'Rose Bloom Tote',
+                      progress: 68,
+                      deadline: 'Nov 12',
+                      color: AppColors.softPink,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _projectCard(
+                      context,
+                      name: 'Baby Blanket',
+                      progress: 35,
+                      deadline: 'Dec 1',
+                      color: AppColors.cream,
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 28),
 
-            
-              _sectionTitle("Your Crochet Tools"),
-              const SizedBox(height: 14),
+              // CROCHET TOOLS
+              _sectionTitle(
+                'Your Crochet Tools',
+                'Everything you need in one place',
+              ),
+
+              const SizedBox(height: 15),
 
               GridView.count(
                 crossAxisCount: 2,
@@ -122,72 +191,132 @@ class HomeScreen extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 1.6,
+                childAspectRatio: 1.5,
                 children: [
-                  _toolCard(Icons.inventory_2_outlined, "Yarn Inventory"),
-                  _toolCard(Icons.exposure_plus_1, "Row Counter"),
-                  _toolCard(Icons.palette_outlined, "Color Studio"),
-                  _toolCard(Icons.calculate_outlined, "Cost Calculator"),
+                  _toolCard(
+                    context,
+                    title: 'Yarn Inventory',
+                    subtitle: 'Manage your yarn stash',
+                    icon: Icons.inventory_2_outlined,
+                    color: AppColors.softPink,
+                    onTap: () {
+                      _openScreen(
+                        context,
+                        const YarnStashScreen(),
+                      );
+                    },
+                  ),
+                  _toolCard(
+                    context,
+                    title: 'Row Counter',
+                    subtitle: 'Track your crochet rows',
+                    icon: Icons.calculate_outlined,
+                    color: AppColors.cream,
+                    onTap: () {
+                      _showComingSoon(context, 'Row Counter');
+                    },
+                  ),
+                  _toolCard(
+                    context,
+                    title: 'Color Studio',
+                    subtitle: 'Explore color combinations',
+                    icon: Icons.palette_outlined,
+                    color: AppColors.sageGreen,
+                    onTap: () {
+                      _showComingSoon(context, 'Color Studio');
+                    },
+                  ),
+                  _toolCard(
+                    context,
+                    title: 'Cost Calculator',
+                    subtitle: 'Calculate project costs',
+                    icon: Icons.calculate,
+                    color: const Color(0xFFE3C9A8),
+                    onTap: () {
+                      _showComingSoon(context, 'Cost Calculator');
+                    },
+                  ),
                 ],
               ),
 
               const SizedBox(height: 28),
 
-              
-              _sectionTitle("Beginner-Friendly Patterns"),
-              const SizedBox(height: 14),
+              // BEGINNER PATTERNS
+              _sectionTitle(
+                'Made for You',
+                'Start with something simple',
+              ),
+
+              const SizedBox(height: 15),
 
               Container(
-                width: double.infinity,
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: AppColors.border),
+                  border: Border.all(
+                    color: AppColors.border,
+                  ),
                 ),
                 child: Row(
                   children: [
                     Container(
-                      width: 55,
-                      height: 55,
+                      width: 85,
+                      height: 85,
                       decoration: BoxDecoration(
                         color: AppColors.cream,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: const Icon(
                         Icons.local_florist,
-                        size: 30,
+                        size: 45,
                         color: AppColors.primary,
                       ),
                     ),
-                    const SizedBox(width: 14),
+                    const SizedBox(width: 15),
                     const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Cute Crochet Flowers",
+                            'Cute Crochet Flowers',
                             style: TextStyle(
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15,
                               color: AppColors.darkBrown,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 7),
                           Text(
-                            "Perfect for beginners",
+                            'Beginner friendly • 1 hour',
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12,
                               color: AppColors.secondaryText,
+                            ),
+                          ),
+                          SizedBox(height: 7),
+                          Text(
+                            'A lovely little project to try!',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.primary,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: AppColors.primary,
+                    IconButton(
+                      onPressed: () {
+                        _openScreen(
+                          context,
+                          const PatternFinderScreen(),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.primary,
+                        size: 19,
+                      ),
                     ),
                   ],
                 ),
@@ -195,31 +324,116 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              // Learning Section
-              _sectionTitle("Learn Something New"),
-              const SizedBox(height: 14),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: _learningCard(
-                      Icons.school_outlined,
-                      "Learn Crochet",
-                      "Start learning",
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _learningCard(
-                      Icons.auto_awesome,
-                      "Tutorial Simplifier",
-                      "Understand patterns",
-                    ),
-                  ),
-                ],
+              // LEARNING SECTION
+              _sectionTitle(
+                'Learn Something New',
+                'Grow your crochet skills',
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
+
+              _learningCard(
+                context,
+                title: 'Learn Crochet',
+                subtitle: 'Step-by-step crochet lessons',
+                icon: Icons.school_outlined,
+                color: AppColors.sageGreen,
+                onTap: () {
+                  _showComingSoon(context, 'Learn Crochet');
+                },
+              ),
+
+              const SizedBox(height: 12),
+
+              _learningCard(
+                context,
+                title: 'Tutorial Simplifier',
+                subtitle: 'Make difficult patterns easier',
+                icon: Icons.auto_awesome_outlined,
+                color: AppColors.softPink,
+                onTap: () {
+                  _showComingSoon(context, 'Tutorial Simplifier');
+                },
+              ),
+
+              const SizedBox(height: 28),
+
+              // MY PROJECTS SHORTCUT
+              _sectionTitle(
+                'Your Creative Journey',
+                'Keep making beautiful things',
+              ),
+
+              const SizedBox(height: 15),
+
+              Container(
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: AppColors.border,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.folder_open_outlined,
+                      size: 38,
+                      color: AppColors.primary,
+                    ),
+                    const SizedBox(width: 14),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'My Projects',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.darkBrown,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            'Manage your handmade creations.',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.secondaryText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _openScreen(
+                          context,
+                          const ProjectsScreen(),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.primary,
+                        size: 19,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              const Center(
+                child: Text(
+                  'Made with love and yarn ♡',
+                  style: TextStyle(
+                    color: AppColors.secondaryText,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -227,136 +441,252 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  
-  Widget _sectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontSize: 19,
-        fontWeight: FontWeight.bold,
-        color: AppColors.darkBrown,
-      ),
+  // SECTION TITLE
+  Widget _sectionTitle(String title, String subtitle) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 19,
+            fontWeight: FontWeight.bold,
+            color: AppColors.darkBrown,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          subtitle,
+          style: const TextStyle(
+            fontSize: 12,
+            color: AppColors.secondaryText,
+          ),
+        ),
+      ],
     );
   }
 
+  // PROJECT CARD
   Widget _projectCard(
-      String name,
-      String percentage,
-      double progress,
-      String subtitle,
-      ) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppColors.darkBrown,
-            ),
+      BuildContext context, {
+        required String name,
+        required int progress,
+        required String deadline,
+        required Color color,
+      }) {
+    return GestureDetector(
+      onTap: () {
+        _openScreen(
+          context,
+          const ProjectsScreen(),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(
+            color: AppColors.border,
           ),
-          const SizedBox(height: 5),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 13,
-              color: AppColors.secondaryText,
-            ),
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: progress,
-              minHeight: 8,
-              backgroundColor: AppColors.cream,
-              valueColor: const AlwaysStoppedAnimation<Color>(
-                AppColors.primary,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.favorite_border,
+                color: AppColors.darkBrown,
               ),
             ),
-          ),
-          const SizedBox(height: 7),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              percentage,
+            const SizedBox(height: 12),
+            Text(
+              name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: AppColors.darkBrown,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              'Due: $deadline',
+              style: const TextStyle(
+                fontSize: 11,
+                color: AppColors.secondaryText,
+              ),
+            ),
+            const SizedBox(height: 12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: LinearProgressIndicator(
+                value: progress / 100,
+                minHeight: 7,
+                backgroundColor: AppColors.cream,
                 color: AppColors.primary,
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 6),
+            Text(
+              '$progress% completed',
+              style: const TextStyle(
+                fontSize: 11,
+                color: AppColors.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _toolCard(IconData icon, String title) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 27, color: AppColors.primary),
-          const SizedBox(height: 9),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: AppColors.darkBrown,
-            ),
+  // TOOL CARD
+  Widget _toolCard(
+      BuildContext context, {
+        required String title,
+        required String subtitle,
+        required IconData icon,
+        required Color color,
+        required VoidCallback onTap,
+      }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(17),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(
+            color: AppColors.border,
           ),
-        ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 43,
+              height: 43,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: AppColors.darkBrown,
+                size: 23,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.darkBrown,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: AppColors.secondaryText,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  
-  Widget _learningCard(IconData icon, String title, String subtitle) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: AppColors.cream,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 28, color: AppColors.primary),
-          const SizedBox(height: 12),
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-              color: AppColors.darkBrown,
-            ),
+  // LEARNING CARD
+  Widget _learningCard(
+      BuildContext context, {
+        required String title,
+        required String subtitle,
+        required IconData icon,
+        required Color color,
+        required VoidCallback onTap,
+      }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(17),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(
+            color: AppColors.border,
           ),
-          const SizedBox(height: 5),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.secondaryText,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Icon(
+                icon,
+                color: AppColors.darkBrown,
+                size: 25,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.darkBrown,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.secondaryText,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: AppColors.primary,
+            ),
+          ],
+        ),
       ),
     );
   }
