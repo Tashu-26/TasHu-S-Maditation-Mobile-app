@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import 'yarn_stash_screen.dart';
 import 'pattern_finder_screen.dart';
 import 'projects_screen.dart';
+import 'color_helper_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -223,7 +224,10 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.palette_outlined,
                     color: AppColors.sageGreen,
                     onTap: () {
-                      _showComingSoon(context, 'Color Studio');
+                      _openScreen(
+                        context,
+                        const ColorHelperScreen(),
+                      );
                     },
                   ),
                   _toolCard(
