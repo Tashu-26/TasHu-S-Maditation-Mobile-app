@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import 'saved_patterns_screen.dart';
+import 'settings_screen.dart';
 
 class MyStudioScreen extends StatefulWidget {
   const MyStudioScreen({super.key});
@@ -205,6 +206,15 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
     );
   }
 
+  void _openSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SettingsScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,7 +269,7 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
 
               const SizedBox(height: 25),
 
-              // Profile card
+              // Profile Card
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -269,10 +279,10 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                 ),
                 child: Column(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 43,
                       backgroundColor: AppColors.softPink,
-                      child: const Icon(
+                      child: Icon(
                         Icons.person_rounded,
                         size: 48,
                         color: AppColors.darkBrown,
@@ -316,7 +326,7 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
 
               const SizedBox(height: 28),
 
-              // Crochet statistics
+              // Crochet Statistics
               const Text(
                 'My Crochet Journey',
                 style: TextStyle(
@@ -354,7 +364,7 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
 
               const SizedBox(height: 28),
 
-              // Creative space
+              // Creative Space
               const Text(
                 'My Creative Space',
                 style: TextStyle(
@@ -422,11 +432,7 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                 icon: Icons.settings_outlined,
                 title: 'Settings',
                 subtitle: 'Manage your app preferences',
-                onTap: () {
-                  _showMessage(
-                    'Settings screen will be connected soon.',
-                  );
-                },
+                onTap: _openSettings,
               ),
 
               _buildMenuItem(
@@ -457,7 +463,7 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
 
               const SizedBox(height: 20),
 
-              Center(
+              const Center(
                 child: Text(
                   'Made with ♡ for crochet lovers',
                   style: TextStyle(
