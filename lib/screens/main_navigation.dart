@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import 'home_screen.dart';
 import 'pattern_finder_screen.dart';
 import 'projects_screen.dart';
+import 'my_studio_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -20,11 +21,7 @@ class _MainNavigationState extends State<MainNavigation> {
     const HomeScreen(),
     const PatternFinderScreen(),
     const ProjectsScreen(),
-    const PlaceholderScreen(
-      title: 'My Studio',
-      icon: Icons.person_outline,
-      description: 'Your personal crochet space.',
-    ),
+    const MyStudioScreen(),
   ];
 
   @override
