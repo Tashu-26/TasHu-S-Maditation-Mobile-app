@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
+import 'saved_patterns_screen.dart';
 
 class MyStudioScreen extends StatefulWidget {
   const MyStudioScreen({super.key});
@@ -51,7 +53,11 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
+              onPressed: () {
+                Navigator.pop(dialogContext);
+                nameController.dispose();
+                emailController.dispose();
+              },
               child: const Text('Cancel'),
             ),
             ElevatedButton(
@@ -67,6 +73,8 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                 });
 
                 Navigator.pop(dialogContext);
+                nameController.dispose();
+                emailController.dispose();
               },
               child: const Text('Save'),
             ),
@@ -107,7 +115,11 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                 color: color.withValues(alpha: 0.25),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: AppColors.darkBrown, size: 21),
+              child: Icon(
+                icon,
+                color: AppColors.darkBrown,
+                size: 21,
+              ),
             ),
             const SizedBox(height: 13),
             Text(
@@ -156,7 +168,10 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
             color: AppColors.cream,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(icon, color: AppColors.primary),
+          child: Icon(
+            icon,
+            color: AppColors.primary,
+          ),
         ),
         title: Text(
           title,
@@ -177,6 +192,15 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
           color: AppColors.secondaryText,
         ),
         onTap: onTap,
+      ),
+    );
+  }
+
+  void _openSavedPatterns() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SavedPatternsScreen(),
       ),
     );
   }
@@ -219,9 +243,11 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                     ],
                   ),
                   IconButton(
-                    onPressed: () => _showMessage(
-                      'Notifications will be available soon.',
-                    ),
+                    onPressed: () {
+                      _showMessage(
+                        'Notifications will be available soon.',
+                      );
+                    },
                     icon: const Icon(
                       Icons.notifications_none_rounded,
                       color: AppColors.darkBrown,
@@ -272,11 +298,16 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                     const SizedBox(height: 16),
                     OutlinedButton.icon(
                       onPressed: _editProfile,
-                      icon: const Icon(Icons.edit_outlined, size: 17),
+                      icon: const Icon(
+                        Icons.edit_outlined,
+                        size: 17,
+                      ),
                       label: const Text('Edit Profile'),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.primary,
-                        side: const BorderSide(color: AppColors.primary),
+                        side: const BorderSide(
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
                   ],
@@ -285,7 +316,7 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
 
               const SizedBox(height: 28),
 
-              // Statistics
+              // Crochet statistics
               const Text(
                 'My Crochet Journey',
                 style: TextStyle(
@@ -338,41 +369,45 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                 icon: Icons.folder_open_outlined,
                 title: 'My Projects',
                 subtitle: 'View your crochet projects',
-                onTap: () => _showMessage(
-                  'Open My Projects from the Projects tab.',
-                ),
+                onTap: () {
+                  _showMessage(
+                    'Open My Projects from the Projects tab.',
+                  );
+                },
               ),
 
               _buildMenuItem(
                 icon: Icons.favorite_border,
                 title: 'Saved Patterns',
                 subtitle: 'Your favorite crochet patterns',
-                onTap: () => _showMessage(
-                  'Saved Patterns screen will be connected soon.',
-                ),
+                onTap: _openSavedPatterns,
               ),
 
               _buildMenuItem(
                 icon: Icons.inventory_2_outlined,
                 title: 'My Yarn Collection',
                 subtitle: 'Manage your yarn inventory',
-                onTap: () => _showMessage(
-                  'Open your yarn collection from the Yarn Inventory feature.',
-                ),
+                onTap: () {
+                  _showMessage(
+                    'Open your yarn collection from the Yarn Inventory feature.',
+                  );
+                },
               ),
 
               _buildMenuItem(
                 icon: Icons.palette_outlined,
                 title: 'Saved Color Palettes',
                 subtitle: 'Your favorite color combinations',
-                onTap: () => _showMessage(
-                  'Saved Color Palettes will be connected soon.',
-                ),
+                onTap: () {
+                  _showMessage(
+                    'Saved Color Palettes will be connected soon.',
+                  );
+                },
               ),
 
               const SizedBox(height: 18),
 
-              // Settings
+              // Account
               const Text(
                 'Account',
                 style: TextStyle(
@@ -387,18 +422,22 @@ class _MyStudioScreenState extends State<MyStudioScreen> {
                 icon: Icons.settings_outlined,
                 title: 'Settings',
                 subtitle: 'Manage your app preferences',
-                onTap: () => _showMessage(
-                  'Settings screen will be connected soon.',
-                ),
+                onTap: () {
+                  _showMessage(
+                    'Settings screen will be connected soon.',
+                  );
+                },
               ),
 
               _buildMenuItem(
                 icon: Icons.help_outline_rounded,
                 title: 'Help & Support',
                 subtitle: 'Get help using TasHu\'S Maditation',
-                onTap: () => _showMessage(
-                  'Help and Support will be available soon.',
-                ),
+                onTap: () {
+                  _showMessage(
+                    'Help and Support will be available soon.',
+                  );
+                },
               ),
 
               _buildMenuItem(
