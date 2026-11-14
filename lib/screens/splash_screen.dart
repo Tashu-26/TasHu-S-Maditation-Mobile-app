@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-
 import '../theme/app_colors.dart';
 import 'onboarding_screen.dart';
 
@@ -10,161 +9,175 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF9F4),
+      backgroundColor: AppColors.background,
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
+        child: Stack(
+          children: [
+            // Decorative yarn balls
+            Positioned(
+              top: 35,
+              left: -35,
+              child: _yarnBall(
+                color: AppColors.softPink,
+                size: 105,
+              ),
+            ),
+            Positioned(
+              top: 100,
+              right: -40,
+              child: _yarnBall(
+                color: AppColors.beige,
+                size: 115,
+              ),
+            ),
+            Positioned(
+              bottom: 120,
+              left: -45,
+              child: _yarnBall(
+                color: AppColors.sageGreen,
+                size: 110,
+              ),
+            ),
+            Positioned(
+              bottom: 45,
+              right: -35,
+              child: _yarnBall(
+                color: AppColors.softPink,
+                size: 90,
+              ),
+            ),
+
+            // Main splash content
+            SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
+                  minHeight: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      MediaQuery.of(context).padding.bottom,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
-                    vertical: 20,
+                    vertical: 25,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 15),
 
-                      // Decorative yarn balls
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _yarnBall(
-                            color: AppColors.softPink,
-                            size: 65,
-                          ),
-                          _yarnBall(
-                            color: AppColors.sageGreen,
-                            size: 85,
-                          ),
-                          _yarnBall(
-                            color: AppColors.beige,
-                            size: 60,
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 30),
-
-                      // Main logo card
+                      // Logo container
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 35,
-                        ),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.85),
+                          color: AppColors.white.withValues(alpha: 0.90),
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.beige.withValues(alpha: 0.2),
+                              color: AppColors.primary.withValues(
+                                alpha: 0.10,
+                              ),
                               blurRadius: 25,
                               offset: const Offset(0, 10),
                             ),
                           ],
                         ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 105,
-                              width: 105,
-                              decoration: BoxDecoration(
-                                color: AppColors.cream,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.softPink,
-                                  width: 2,
+                        child: Image.asset(
+                          'assets/images/tashus_logo.png',
+                          width: 310,
+                          height: 310,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const SizedBox(
+                              height: 310,
+                              child: Center(
+                                child: Icon(
+                                  Icons.image_not_supported_outlined,
+                                  size: 55,
+                                  color: AppColors.primary,
                                 ),
                               ),
-                              child: const Icon(
-                                Icons.spa_rounded,
-                                size: 58,
-                                color: AppColors.primary,
-                              ),
-                            ),
-
-                            const SizedBox(height: 25),
-
-                            const Text(
-                              "TasHu'S Maditation",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 29,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.darkBrown,
-                              ),
-                            ),
-
-                            const SizedBox(height: 10),
-
-                            const Text(
-                              'Smart Crochet Companion',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-
-                            const SizedBox(height: 15),
-
-                            const Text(
-                              'Your little world of crochet.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: AppColors.secondaryText,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
                       ),
 
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
 
-                      // App features
+                      // App name
+                      const Text(
+                        "TasHu'S Maditation",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkBrown,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      // Subtitle
+                      const Text(
+                        'Smart Crochet Companion',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary,
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      const Text(
+                        'Your little world of crochet.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
+
+                      const SizedBox(height: 25),
+
+                      // Feature chips
                       Wrap(
                         alignment: WrapAlignment.center,
-                        spacing: 10,
-                        runSpacing: 12,
+                        spacing: 9,
+                        runSpacing: 10,
                         children: const [
                           _FeatureChip(
-                            icon: Icons.menu_book_rounded,
+                            icon: Icons.auto_awesome,
                             label: 'Patterns',
                           ),
                           _FeatureChip(
-                            icon: Icons.inventory_2_rounded,
+                            icon: Icons.inventory_2_outlined,
                             label: 'Yarn Stash',
                           ),
                           _FeatureChip(
-                            icon: Icons.workspaces_rounded,
+                            icon: Icons.work_outline,
                             label: 'Projects',
                           ),
                           _FeatureChip(
-                            icon: Icons.palette_rounded,
+                            icon: Icons.palette_outlined,
                             label: 'Color Helper',
                           ),
                           _FeatureChip(
-                            icon: Icons.calculate_rounded,
+                            icon: Icons.calculate_outlined,
                             label: 'Cost Calculator',
                           ),
                           _FeatureChip(
-                            icon: Icons.auto_awesome_rounded,
+                            icon: Icons.menu_book_outlined,
                             label: 'Tutorial Simplifier',
                           ),
                         ],
                       ),
 
-                      const SizedBox(height: 35),
+                      const SizedBox(height: 30),
 
-                      // Loading-style progress indicator
+                      // Decorative progress indicator
                       SizedBox(
                         width: 130,
                         child: ClipRRect(
@@ -180,12 +193,12 @@ class SplashScreen extends StatelessWidget {
                         ),
                       ),
 
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 25),
 
                       // Get Started button
                       SizedBox(
                         width: double.infinity,
-                        height: 55,
+                        height: 54,
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.pushReplacement(
@@ -198,72 +211,72 @@ class SplashScreen extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.white,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
                             ),
                           ),
-                          child: const Text(
-                            'Get Started',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Get Started',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Icon(Icons.arrow_forward_rounded),
+                            ],
                           ),
                         ),
                       ),
 
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 20),
 
                       const Text(
-                        'Made with love and yarn ♡',
+                        'Made with love for crochet lovers',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 12,
                           color: AppColors.secondaryText,
                         ),
                       ),
+
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
   }
 
   // Decorative yarn ball widget
-  static Widget _yarnBall({
+  Widget _yarnBall({
     required Color color,
     required double size,
   }) {
     return Container(
-      height: size,
       width: size,
+      height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: RadialGradient(
-          center: const Alignment(-0.3, -0.3),
-          colors: [
-            color.withValues(alpha: 0.6),
-            color,
-            color.withValues(alpha: 0.8),
-          ],
+        color: color.withValues(alpha: 0.20),
+        border: Border.all(
+          color: color.withValues(alpha: 0.30),
+          width: 2,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: color.withValues(alpha: 0.25),
-            blurRadius: 12,
-            offset: const Offset(3, 5),
-          ),
-        ],
       ),
       child: Icon(
         Icons.cyclone_rounded,
         size: size * 0.65,
-        color: Colors.white.withValues(alpha: 0.8),
+        color: color.withValues(alpha: 0.65),
       ),
     );
   }
@@ -283,11 +296,11 @@ class _FeatureChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 13,
-        vertical: 10,
+        horizontal: 12,
+        vertical: 9,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(25),
         border: Border.all(
           color: AppColors.border,
@@ -298,16 +311,16 @@ class _FeatureChip extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 16,
+            size: 15,
             color: AppColors.primary,
           ),
           const SizedBox(width: 6),
           Text(
             label,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
               color: AppColors.darkBrown,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],
