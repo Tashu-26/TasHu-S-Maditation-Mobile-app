@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+
+import '../models/pattern_item.dart';
 import '../theme/app_colors.dart';
 import 'pattern_details_screen.dart';
 
@@ -7,11 +9,13 @@ class PatternFinderScreen extends StatefulWidget {
   const PatternFinderScreen({super.key});
 
   @override
-  State<PatternFinderScreen> createState() => _PatternFinderScreenState();
+  State<PatternFinderScreen> createState() =>
+      _PatternFinderScreenState();
 }
 
 class _PatternFinderScreenState extends State<PatternFinderScreen> {
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController =
+  TextEditingController();
 
   String _selectedCategory = 'All';
   String _selectedDifficulty = 'All';
@@ -34,65 +38,6 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
     'Advanced',
   ];
 
-  final List<PatternItem> _patterns = [
-    PatternItem(
-      name: 'Daisy Coaster',
-      category: 'Flowers',
-      difficulty: 'Beginner',
-      duration: '1 hr',
-      icon: Icons.local_florist,
-      color: const Color(0xFFE9B3C0),
-      popularity: 1,
-    ),
-    PatternItem(
-      name: 'Mini Market Tote',
-      category: 'Bags',
-      difficulty: 'Intermediate',
-      duration: '6 hrs',
-      icon: Icons.shopping_bag_outlined,
-      color: const Color(0xFFE8D5C4),
-      popularity: 2,
-    ),
-    PatternItem(
-      name: 'Bunny Amigurumi',
-      category: 'Toys',
-      difficulty: 'Intermediate',
-      duration: '8 hrs',
-      icon: Icons.cruelty_free_outlined,
-      color: const Color(0xFFFBE3EA),
-      popularity: 3,
-    ),
-    PatternItem(
-      name: 'Bow Headband',
-      category: 'Accessories',
-      difficulty: 'Beginner',
-      duration: '2 hrs',
-      icon: Icons.favorite_border,
-      color: const Color(0xFFB96F83),
-      popularity: 4,
-    ),
-    PatternItem(
-      name: 'Granny Square Cushion',
-      category: 'Home Decor',
-      difficulty: 'Beginner',
-      duration: '5 hrs',
-      icon: Icons.weekend_outlined,
-      color: const Color(0xFFE3C9A8),
-      popularity: 5,
-    ),
-    PatternItem(
-      name: 'Cardigan Vest',
-      category: 'Clothing',
-      difficulty: 'Advanced',
-      duration: '20 hrs',
-      icon: Icons.checkroom_outlined,
-      color: const Color(0xFFB9CBB5),
-      popularity: 6,
-    ),
-  ];
-
-  final Set<String> _savedPatterns = {};
-
   @override
   void dispose() {
     _searchController.dispose();
@@ -102,18 +47,23 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
   List<PatternItem> get _filteredPatterns {
     final query = _searchController.text.toLowerCase();
 
-    List<PatternItem> results = _patterns.where((pattern) {
+    List<PatternItem> results =
+    PatternCatalog.patterns.where((pattern) {
       final matchesSearch =
           pattern.name.toLowerCase().contains(query) ||
               pattern.category.toLowerCase().contains(query);
 
-      final matchesCategory = _selectedCategory == 'All' ||
-          pattern.category == _selectedCategory;
+      final matchesCategory =
+          _selectedCategory == 'All' ||
+              pattern.category == _selectedCategory;
 
-      final matchesDifficulty = _selectedDifficulty == 'All' ||
-          pattern.difficulty == _selectedDifficulty;
+      final matchesDifficulty =
+          _selectedDifficulty == 'All' ||
+              pattern.difficulty == _selectedDifficulty;
 
-      return matchesSearch && matchesCategory && matchesDifficulty;
+      return matchesSearch &&
+          matchesCategory &&
+          matchesDifficulty;
     }).toList();
 
     if (_sortBy == 'Name A-Z') {
@@ -123,7 +73,9 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
             (a, b) => a.durationHours.compareTo(b.durationHours),
       );
     } else {
-      results.sort((a, b) => a.popularity.compareTo(b.popularity));
+      results.sort(
+            (a, b) => a.popularity.compareTo(b.popularity),
+      );
     }
 
     return results;
@@ -141,6 +93,7 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Header
               const Text(
                 'Find Your Next Project',
                 style: TextStyle(
@@ -157,6 +110,7 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
                   color: AppColors.secondaryText,
                 ),
               ),
+
               const SizedBox(height: 20),
 
               // Search bar
@@ -183,7 +137,8 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
                   ),
                   filled: true,
                   fillColor: AppColors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                  contentPadding:
+                  const EdgeInsets.symmetric(vertical: 16),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
@@ -213,7 +168,8 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
                   const SizedBox(width: 8),
                   itemBuilder: (context, index) {
                     final category = _categories[index];
-                    final selected = _selectedCategory == category;
+                    final selected =
+                        _selectedCategory == category;
 
                     return ChoiceChip(
                       label: Text(category),
@@ -257,7 +213,8 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
                 spacing: 8,
                 runSpacing: 8,
                 children: _difficulties.map((difficulty) {
-                  final selected = _selectedDifficulty == difficulty;
+                  final selected =
+                      _selectedDifficulty == difficulty;
 
                   return ChoiceChip(
                     label: Text(difficulty),
@@ -404,7 +361,8 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
   }
 
   Widget _buildPatternCard(PatternItem pattern) {
-    final isSaved = _savedPatterns.contains(pattern.name);
+    final isSaved =
+    SavedPatternsStore.instance.isSaved(pattern.name);
 
     return InkWell(
       borderRadius: BorderRadius.circular(18),
@@ -449,20 +407,18 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
                       child: IconButton(
                         visualDensity: VisualDensity.compact,
                         icon: Icon(
-                          isSaved ? Icons.favorite : Icons.favorite_border,
+                          isSaved
+                              ? Icons.favorite
+                              : Icons.favorite_border,
                           color: isSaved
                               ? AppColors.primary
                               : AppColors.darkBrown,
                           size: 19,
                         ),
                         onPressed: () {
-                          setState(() {
-                            if (isSaved) {
-                              _savedPatterns.remove(pattern.name);
-                            } else {
-                              _savedPatterns.add(pattern.name);
-                            }
-                          });
+                          SavedPatternsStore.instance.toggle(pattern);
+
+                          setState(() {});
                         },
                       ),
                     ),
@@ -494,30 +450,5 @@ class _PatternFinderScreenState extends State<PatternFinderScreen> {
         ],
       ),
     );
-  }
-}
-
-class PatternItem {
-  final String name;
-  final String category;
-  final String difficulty;
-  final String duration;
-  final IconData icon;
-  final Color color;
-  final int popularity;
-
-  const PatternItem({
-    required this.name,
-    required this.category,
-    required this.difficulty,
-    required this.duration,
-    required this.icon,
-    required this.color,
-    required this.popularity,
-  });
-
-  double get durationHours {
-    final number = double.tryParse(duration.split(' ').first) ?? 0;
-    return duration.contains('min') ? number / 60 : number;
   }
 }
