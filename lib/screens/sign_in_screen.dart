@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import 'main_navigation.dart';
+import 'sign_up_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -49,6 +50,15 @@ class _SignInScreenState extends State<SignInScreen> {
         content: Text(message),
         backgroundColor: AppColors.darkBrown,
         behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  void _openSignUp() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const SignUpScreen(),
       ),
     );
   }
@@ -220,7 +230,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 const SizedBox(height: 12),
 
-                // Remember me and forgot password
+                // Remember me and Forgot Password
                 Row(
                   children: [
                     Checkbox(
@@ -261,7 +271,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 const SizedBox(height: 22),
 
-                // Sign in button
+                // Sign In button
                 SizedBox(
                   width: double.infinity,
                   height: 55,
@@ -291,10 +301,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 Row(
                   children: [
                     const Expanded(
-                      child: Divider(color: AppColors.border),
+                      child: Divider(
+                        color: AppColors.border,
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
                         'OR',
                         style: TextStyle(
@@ -304,14 +316,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     const Expanded(
-                      child: Divider(color: AppColors.border),
+                      child: Divider(
+                        color: AppColors.border,
+                      ),
                     ),
                   ],
                 ),
 
                 const SizedBox(height: 25),
 
-                // Sign up link
+                // Sign Up link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -323,11 +337,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
-                        _showMessage(
-                          'Sign Up Screen is coming next!',
-                        );
-                      },
+                      onPressed: _openSignUp,
                       child: const Text(
                         'Create Account',
                         style: TextStyle(
