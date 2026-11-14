@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
-import 'main_navigation.dart';
 import 'sign_in_screen.dart';
+
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
