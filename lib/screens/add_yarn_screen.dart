@@ -137,7 +137,7 @@ class _AddYarnScreenState extends State<AddYarnScreen> {
                 const SizedBox(height: 12),
 
                 DropdownButtonFormField<String>(
-                  value: _selectedCategory,
+                  initialValue: _selectedCategory,
                   decoration: _inputDecoration(
                     'Select category',
                     Icons.category_outlined,
