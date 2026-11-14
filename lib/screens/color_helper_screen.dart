@@ -169,7 +169,7 @@ class _ColorHelperScreenState extends State<ColorHelperScreen> {
                     ),
                     const SizedBox(height: 18),
                     Text(
-                      '${_mode} Color Combination',
+                      '$_mode Color Combination',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: AppColors.darkBrown,
