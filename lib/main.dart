@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
+
 import 'theme/app_theme.dart';
-import 'screens/main_navigation.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const TasHuApp());
@@ -15,7 +17,7 @@ class TasHuApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'TasHu\'S Maditation',
       theme: AppTheme.lightTheme,
-      home: const MainNavigation(),
+      home: const SplashScreen(),
     );
   }
 }
