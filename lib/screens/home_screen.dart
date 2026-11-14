@@ -8,6 +8,7 @@ import 'projects_screen.dart';
 import 'color_helper_screen.dart';
 import 'cost_calculator_screen.dart';
 import 'learn_screen.dart';
+import 'tutorial_simplifier_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -370,7 +371,12 @@ class HomeScreen extends StatelessWidget {
                 icon: Icons.auto_awesome_outlined,
                 color: AppColors.softPink,
                 onTap: () {
-                  _showComingSoon(context, 'Tutorial Simplifier');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TutorialSimplifierScreen(),
+                    ),
+                  );
                 },
               ),
 
