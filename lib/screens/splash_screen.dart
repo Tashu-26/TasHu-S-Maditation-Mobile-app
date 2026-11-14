@@ -1,77 +1,11 @@
 
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
+import 'onboarding_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  void _getStarted(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Welcome! Your onboarding screen is coming next.'),
-        backgroundColor: AppColors.darkBrown,
-      ),
-    );
-  }
-
-  Widget _yarnBall({
-    required double size,
-    required Color color,
-  }) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: RadialGradient(
-          center: const Alignment(-0.35, -0.4),
-          radius: 0.9,
-          colors: [
-            Colors.white.withValues(alpha: 0.75),
-            color,
-            color.withValues(alpha: 0.75),
-          ],
-          stops: const [0.0, 0.45, 1.0],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.darkBrown.withValues(alpha: 0.16),
-            blurRadius: 14,
-            offset: const Offset(4, 8),
-          ),
-        ],
-      ),
-      child: Icon(
-        Icons.cyclone_rounded,
-        size: size * 0.72,
-        color: Colors.white.withValues(alpha: 0.55),
-      ),
-    );
-  }
-
-  Widget _featureChip(String title) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 7,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.white.withValues(alpha: 0.75),
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(
-          color: AppColors.border,
-        ),
-      ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: AppColors.darkBrown,
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,84 +13,66 @@ class SplashScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFFFF9F4),
       body: SafeArea(
         child: LayoutBuilder(
-          builder: (context, _) {
-            return Stack(
-              children: [
-                // Soft background decoration
-                Positioned(
-                  top: 35,
-                  left: -45,
-                  child: _yarnBall(
-                    size: 170,
-                    color: AppColors.softPink,
-                  ),
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
                 ),
-                Positioned(
-                  top: 75,
-                  right: -35,
-                  child: _yarnBall(
-                    size: 125,
-                    color: AppColors.cream,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
                   ),
-                ),
-                Positioned(
-                  bottom: 65,
-                  right: -30,
-                  child: _yarnBall(
-                    size: 145,
-                    color: AppColors.primary,
-                  ),
-                ),
-                Positioned(
-                  bottom: 35,
-                  left: -25,
-                  child: _yarnBall(
-                    size: 105,
-                    color: AppColors.softPink,
-                  ),
-                ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 15),
 
-                // Main splash content
-                Center(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 24,
-                    ),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: 440,
+                      // Decorative yarn balls
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _yarnBall(
+                            color: AppColors.softPink,
+                            size: 65,
+                          ),
+                          _yarnBall(
+                            color: AppColors.sageGreen,
+                            size: 85,
+                          ),
+                          _yarnBall(
+                            color: AppColors.beige,
+                            size: 60,
+                          ),
+                        ],
                       ),
-                      child: Container(
+
+                      const SizedBox(height: 30),
+
+                      // Main logo card
+                      Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 22,
-                          vertical: 30,
+                          horizontal: 20,
+                          vertical: 35,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.white.withValues(alpha: 0.68),
+                          color: Colors.white.withValues(alpha: 0.85),
                           borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            color: AppColors.white.withValues(alpha: 0.9),
-                            width: 1.5,
-                          ),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primary.withValues(
-                                alpha: 0.13,
-                              ),
-                              blurRadius: 30,
-                              offset: const Offset(0, 14),
+                              color: AppColors.beige.withValues(alpha: 0.2),
+                              blurRadius: 25,
+                              offset: const Offset(0, 10),
                             ),
                           ],
                         ),
                         child: Column(
-                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            // App icon / logo placeholder
                             Container(
-                              width: 112,
-                              height: 112,
+                              height: 105,
+                              width: 105,
                               decoration: BoxDecoration(
                                 color: AppColors.cream,
                                 shape: BoxShape.circle,
@@ -167,131 +83,234 @@ class SplashScreen extends StatelessWidget {
                               ),
                               child: const Icon(
                                 Icons.spa_rounded,
-                                size: 65,
+                                size: 58,
                                 color: AppColors.primary,
                               ),
                             ),
 
-                            const SizedBox(height: 22),
+                            const SizedBox(height: 25),
 
                             const Text(
-                              'TasHu\'S Maditation',
+                              "TasHu'S Maditation",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 27,
+                                fontSize: 29,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.darkBrown,
-                                letterSpacing: -0.6,
                               ),
                             ),
 
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
 
                             const Text(
                               'Smart Crochet Companion',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w700,
                                 color: AppColors.primary,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
 
-                            const SizedBox(height: 9),
+                            const SizedBox(height: 15),
 
                             const Text(
                               'Your little world of crochet.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 15,
                                 color: AppColors.secondaryText,
-                              ),
-                            ),
-
-                            const SizedBox(height: 23),
-
-                            // Feature chips
-                            Wrap(
-                              alignment: WrapAlignment.center,
-                              spacing: 8,
-                              runSpacing: 9,
-                              children: [
-                                _featureChip('Patterns'),
-                                _featureChip('Yarn Stash'),
-                                _featureChip('Projects'),
-                                _featureChip('Color Helper'),
-                                _featureChip('Cost ৳'),
-                                _featureChip('Tutorial Simplifier'),
-                              ],
-                            ),
-
-                            const SizedBox(height: 25),
-
-                            // Decorative loading indicator
-                            SizedBox(
-                              width: 140,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: const LinearProgressIndicator(
-                                  value: 0.6,
-                                  minHeight: 6,
-                                  backgroundColor: AppColors.softPink,
-                                  valueColor:
-                                  AlwaysStoppedAnimation<Color>(
-                                    AppColors.primary,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            const SizedBox(height: 24),
-
-                            // Get Started button
-                            SizedBox(
-                              width: double.infinity,
-                              height: 52,
-                              child: ElevatedButton(
-                                onPressed: () => _getStarted(context),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary,
-                                  foregroundColor: AppColors.white,
-                                  elevation: 5,
-                                  shadowColor: AppColors.primary.withValues(
-                                    alpha: 0.3,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Get Started',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(width: 9),
-                                    Icon(
-                                      Icons.arrow_forward_rounded,
-                                      size: 20,
-                                    ),
-                                  ],
-                                ),
+                                fontStyle: FontStyle.italic,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
+
+                      const SizedBox(height: 30),
+
+                      // App features
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 10,
+                        runSpacing: 12,
+                        children: const [
+                          _FeatureChip(
+                            icon: Icons.menu_book_rounded,
+                            label: 'Patterns',
+                          ),
+                          _FeatureChip(
+                            icon: Icons.inventory_2_rounded,
+                            label: 'Yarn Stash',
+                          ),
+                          _FeatureChip(
+                            icon: Icons.workspaces_rounded,
+                            label: 'Projects',
+                          ),
+                          _FeatureChip(
+                            icon: Icons.palette_rounded,
+                            label: 'Color Helper',
+                          ),
+                          _FeatureChip(
+                            icon: Icons.calculate_rounded,
+                            label: 'Cost Calculator',
+                          ),
+                          _FeatureChip(
+                            icon: Icons.auto_awesome_rounded,
+                            label: 'Tutorial Simplifier',
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 35),
+
+                      // Loading-style progress indicator
+                      SizedBox(
+                        width: 130,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: const LinearProgressIndicator(
+                            value: 0.6,
+                            minHeight: 5,
+                            backgroundColor: AppColors.cream,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              AppColors.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      // Get Started button
+                      SizedBox(
+                        width: double.infinity,
+                        height: 55,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                const OnboardingScreen(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          child: const Text(
+                            'Get Started',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      const Text(
+                        'Made with love and yarn ♡',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             );
           },
         ),
+      ),
+    );
+  }
+
+  // Decorative yarn ball widget
+  static Widget _yarnBall({
+    required Color color,
+    required double size,
+  }) {
+    return Container(
+      height: size,
+      width: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: RadialGradient(
+          center: const Alignment(-0.3, -0.3),
+          colors: [
+            color.withValues(alpha: 0.6),
+            color,
+            color.withValues(alpha: 0.8),
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: 0.25),
+            blurRadius: 12,
+            offset: const Offset(3, 5),
+          ),
+        ],
+      ),
+      child: Icon(
+        Icons.cyclone_rounded,
+        size: size * 0.65,
+        color: Colors.white.withValues(alpha: 0.8),
+      ),
+    );
+  }
+}
+
+// Feature chip widget
+class _FeatureChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _FeatureChip({
+    required this.icon,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 13,
+        vertical: 10,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: AppColors.border,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 16,
+            color: AppColors.primary,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.darkBrown,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
   }
