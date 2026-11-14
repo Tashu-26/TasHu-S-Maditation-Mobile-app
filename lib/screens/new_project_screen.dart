@@ -161,7 +161,7 @@ class _NewProjectScreenState extends State<NewProjectScreen> {
                 _fieldLabel('Category'),
                 const SizedBox(height: 9),
                 DropdownButtonFormField<String>(
-                  value: _category,
+                  initialValue: _category,
                   decoration: _inputDecoration(
                     hint: 'Choose a category',
                     icon: Icons.category_outlined,
@@ -186,7 +186,7 @@ class _NewProjectScreenState extends State<NewProjectScreen> {
                 _fieldLabel('Difficulty Level'),
                 const SizedBox(height: 9),
                 DropdownButtonFormField<String>(
-                  value: _difficulty,
+                  initialValue: _difficulty,
                   decoration: _inputDecoration(
                     hint: 'Choose difficulty',
                     icon: Icons.bar_chart,
