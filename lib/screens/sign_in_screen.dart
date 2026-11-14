@@ -92,23 +92,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(height: 20),
 
                 // Logo
+                // App Logo
                 Center(
-                  child: Container(
-                    height: 95,
-                    width: 95,
-                    decoration: BoxDecoration(
-                      color: AppColors.cream,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: AppColors.softPink,
-                        width: 2,
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.spa_rounded,
-                      size: 55,
-                      color: AppColors.primary,
-                    ),
+                  child: Image.asset(
+                    'assets/images/tashus_logo.png',
+                    width: 145,
+                    height: 115,
+                    fit: BoxFit.contain,
                   ),
                 ),
 
